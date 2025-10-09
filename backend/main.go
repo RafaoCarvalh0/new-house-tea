@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -13,14 +12,6 @@ import (
 )
 
 func main() {
-	// Initialize Redis from environment variable
-	redisURL := os.Getenv("REDIS_URL")
-	if redisURL == "" {
-		log.Printf("Warning: REDIS_URL not set, caching will be disabled")
-	} else if err := cache.InitRedis(redisURL); err != nil {
-		log.Printf("Warning: Failed to connect to Redis: %v", err)
-	}
-
 	// Initialize database
 	db, err := gorm.Open(sqlite.Open("gifts.db"), &gorm.Config{})
 	if err != nil {
@@ -33,30 +24,12 @@ func main() {
 		log.Fatal("Failed to migrate database:", err)
 	}
 
-	// Check if we need to initialize data
-	var count int64
-	db.Model(&models.Gift{}).Count(&count)
-	if count == 0 {
-		// Read and execute init.sql
-		sqlBytes, err := os.ReadFile("init.sql")
-		if err == nil {
-			// First, check if any items from init.sql already exist
-			var existingGifts []models.Gift
-			db.Find(&existingGifts)
-			
-			// Only insert new items that don't exist yet
-			if len(existingGifts) == 0 {
-				db.Exec(string(sqlBytes))
-			}
-		}
-	}
-
 	// Initialize router
 	router := gin.Default()
 
 	// Configure CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5500"} // Adjust this according to your frontend URL
+	config.AllowOrigins = []string{"*"} // Allow all origins - adjust in production
 	router.Use(cors.New(config))
 
 	// Initialize controller
