@@ -1,0 +1,1 @@
+SET gift:1 "{\"id\":\"1\",\"description\":\"Umidificador de ar\",\"link\":\"https://www.amazon.com.br/Techline-HM-2103-Umidificador-de-ar/dp/B0FH2WFTBB/ref=sr_1_1_sspa?sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1\",\"image_url\":\"https://m.media-amazon.com/images/I/41DrKpCAU5L._AC_SX679_.jpg\",\"reserved\":false}"
