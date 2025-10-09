@@ -2,29 +2,28 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/RafaoCarvalh0/new-house-tea/backend/controllers"
-	"github.com/RafaoCarvalh0/new-house-tea/backend/models"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	"github.com/redis/go-redis/v9"
 )
 
 func main() {
-	// Initialize database
-	db, err := gorm.Open(sqlite.Open("gifts.db"), &gorm.Config{})
-	if err != nil {
-		log.Fatal("Failed to connect to database:", err)
+	// Get Redis URL from environment
+	redisURL := os.Getenv("REDIS_URL")
+	if redisURL == "" {
+		log.Fatal("REDIS_URL environment variable is required")
 	}
 
-	// Auto migrate the schema
-	err = db.AutoMigrate(&models.Gift{})
+	// Initialize Redis client
+	opt, err := redis.ParseURL(redisURL)
 	if err != nil {
-		log.Fatal("Failed to migrate database:", err)
+		log.Fatal("Failed to parse Redis URL:", err)
 	}
 
-	// Initialize router
+	rdb := redis.NewClient(opt) // Initialize router
 	router := gin.Default()
 
 	// Configure CORS
@@ -33,7 +32,7 @@ func main() {
 	router.Use(cors.New(config))
 
 	// Initialize controller
-	giftController := controllers.NewGiftController(db)
+	giftController := controllers.NewGiftController(rdb)
 
 	// Define routes
 	router.GET("/gifts", giftController.ListGifts)

@@ -1,39 +1,72 @@
 package controllers
 
 import (
+	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/RafaoCarvalh0/new-house-tea/backend/models"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
+	"github.com/redis/go-redis/v9"
 )
 
 type GiftController struct {
-	DB *gorm.DB
+	Redis *redis.Client
 }
 
-func NewGiftController(db *gorm.DB) *GiftController {
-	return &GiftController{DB: db}
+func NewGiftController(redis *redis.Client) *GiftController {
+	return &GiftController{Redis: redis}
 }
 
 // ListGifts returns all unreserved gifts
 func (gc *GiftController) ListGifts(c *gin.Context) {
-	var gifts []models.Gift
-	result := gc.DB.Where("is_reserved = ?", false).Find(&gifts)
-	if result.Error != nil {
+	ctx := context.Background()
+
+	// Get all gift keys
+	keys, err := gc.Redis.Keys(ctx, "gift:*").Result()
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching gifts"})
 		return
 	}
+
+	var gifts []models.Gift
+	for _, key := range keys {
+		giftJSON, err := gc.Redis.Get(ctx, key).Result()
+		if err != nil {
+			continue
+		}
+
+		var gift models.Gift
+		if err := json.Unmarshal([]byte(giftJSON), &gift); err != nil {
+			continue
+		}
+
+		if !gift.Reserved {
+			gifts = append(gifts, gift)
+		}
+	}
+
 	c.JSON(http.StatusOK, gifts)
 }
 
 // ReserveGift marks a gift as reserved
 func (gc *GiftController) ReserveGift(c *gin.Context) {
+	ctx := context.Background()
 	id := c.Param("id")
 
-	var gift models.Gift
-	if err := gc.DB.First(&gift, id).Error; err != nil {
+	// Get gift from Redis
+	giftJSON, err := gc.Redis.Get(ctx, "gift:"+id).Result()
+	if err == redis.Nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Gift not found"})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching gift"})
+		return
+	}
+
+	var gift models.Gift
+	if err := json.Unmarshal([]byte(giftJSON), &gift); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error parsing gift data"})
 		return
 	}
 
@@ -43,8 +76,16 @@ func (gc *GiftController) ReserveGift(c *gin.Context) {
 	}
 
 	gift.Reserved = true
-	if err := gc.DB.Save(&gift).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error reserving gift"})
+
+	// Save updated gift back to Redis
+	updatedJSON, err := json.Marshal(gift)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error updating gift"})
+		return
+	}
+
+	if err := gc.Redis.Set(ctx, "gift:"+id, updatedJSON, 0).Err(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error saving gift"})
 		return
 	}
 
