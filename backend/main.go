@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -22,6 +23,17 @@ func main() {
 	err = db.AutoMigrate(&models.Gift{})
 	if err != nil {
 		log.Fatal("Failed to migrate database:", err)
+	}
+
+	// Check if we need to initialize data
+	var count int64
+	db.Model(&models.Gift{}).Count(&count)
+	if count == 0 {
+		// Read and execute init.sql
+		sqlBytes, err := os.ReadFile("init.sql")
+		if err == nil {
+			db.Exec(string(sqlBytes))
+		}
 	}
 
 	// Initialize router
