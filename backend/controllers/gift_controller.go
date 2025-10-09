@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/RafaoCarvalh0/new-house-tea/backend/models"
 	"github.com/gin-gonic/gin"
-	"github.com/rafaelcarvalho/new-house-tea/models"
 	"gorm.io/gorm"
 )
 
@@ -30,19 +30,19 @@ func (gc *GiftController) ListGifts(c *gin.Context) {
 // ReserveGift marks a gift as reserved
 func (gc *GiftController) ReserveGift(c *gin.Context) {
 	id := c.Param("id")
-	
+
 	var gift models.Gift
 	if err := gc.DB.First(&gift, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Gift not found"})
 		return
 	}
 
-	if gift.IsReserved {
+	if gift.Reserved {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Gift already reserved"})
 		return
 	}
 
-	gift.IsReserved = true
+	gift.Reserved = true
 	if err := gc.DB.Save(&gift).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error reserving gift"})
 		return

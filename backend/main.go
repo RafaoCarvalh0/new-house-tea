@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
+	"github.com/RafaoCarvalh0/new-house-tea/backend/controllers"
+	"github.com/RafaoCarvalh0/new-house-tea/backend/models"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/rafaelcarvalho/new-house-tea/controllers"
-	"github.com/rafaelcarvalho/new-house-tea/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
