@@ -14,3 +14,4 @@ go.work
 # System files
 .DS_Store
 Thumbs.db
+.vscode/
