@@ -5,9 +5,6 @@ RUN apk add --no-cache gcc musl-dev
 
 WORKDIR /app
 
-# Copiando apenas os arquivos do backend
-COPY backend/ .
-
 # Habilitando CGO e compilando o projeto
 ENV CGO_ENABLED=1
 RUN go mod download
