@@ -42,7 +42,6 @@ func (gc *GiftController) ListGifts(c *gin.Context) {
 		}
 
 		gifts = append(gifts, gift)
-
 	}
 
 	c.JSON(http.StatusOK, gifts)
@@ -104,7 +103,7 @@ func (gc *GiftController) UnreserveGift(c *gin.Context) {
 	}
 
 	// Busca a admKey no Redis
-	storedKey, err := gc.Redis.Get(ctx, "giftadm:key").Result()
+	storedKeyJSON, err := gc.Redis.Get(ctx, "giftadm:key").Result()
 	if err == redis.Nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Admin key not set"})
 		return
@@ -113,8 +112,18 @@ func (gc *GiftController) UnreserveGift(c *gin.Context) {
 		return
 	}
 
+	// Parse do JSON
+	var admKeyData struct {
+		ID string `json:"id"`
+	}
+
+	if err := json.Unmarshal([]byte(storedKeyJSON), &admKeyData); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error parsing admin key"})
+		return
+	}
+
 	// Valida a passkey
-	if passkey != storedKey {
+	if passkey != admKeyData.ID {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid passkey"})
 		return
 	}
