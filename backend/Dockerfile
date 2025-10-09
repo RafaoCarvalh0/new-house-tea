@@ -5,6 +5,8 @@ RUN apk add --no-cache gcc musl-dev
 
 WORKDIR /app
 
+COPY backend/ ./
+
 # Habilitando CGO e compilando o projeto
 ENV CGO_ENABLED=1
 RUN go mod tidy
