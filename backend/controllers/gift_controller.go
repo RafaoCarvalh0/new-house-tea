@@ -89,5 +89,5 @@ func (gc *GiftController) ReserveGift(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Gift reserved successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "Gift reserved successfully!"})
 }
