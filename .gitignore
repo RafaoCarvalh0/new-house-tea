@@ -1,0 +1,16 @@
+# SQLite database
+backend/gifts.db
+
+# Go binaries and build files
+backend/backend
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go workspace file
+go.work
+
+# System files
+.DS_Store
+Thumbs.db
