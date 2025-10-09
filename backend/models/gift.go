@@ -2,8 +2,8 @@ package models
 
 type Gift struct {
 	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Link        string `json:"link"`
 	Description string `json:"description"`
+	Link        string `json:"link"`
+	ImageUrl    string `json:"image_url"`
 	Reserved    bool   `json:"reserved"`
 }

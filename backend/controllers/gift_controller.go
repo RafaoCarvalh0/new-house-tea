@@ -92,8 +92,8 @@ func (gc *GiftController) ReserveGift(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Gift reserved successfully!"})
 }
 
-// RemoveGiftReservation removes a gift reservation if the correct admin passkey is provided
-func (gc *GiftController) RemoveGiftReservation(c *gin.Context) {
+// UnreserveGift removes a gift reservation if the correct admin passkey is provided
+func (gc *GiftController) UnreserveGift(c *gin.Context) {
 	ctx := context.Background()
 	id := c.Param("id")
 	passkey := c.Query("passkey") // pode ser enviado como query param ?passkey=1234
@@ -105,9 +105,9 @@ func (gc *GiftController) RemoveGiftReservation(c *gin.Context) {
 	}
 
 	// Busca a admKey no Redis
-	storedKey, err := gc.Redis.Get(ctx, "admKey").Result()
+	storedKey, err := gc.Redis.Get(ctx, "giftadm:key").Result()
 	if err == redis.Nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Admin key not set in Redis"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Admin key not set"})
 		return
 	} else if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching admin key"})

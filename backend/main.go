@@ -37,6 +37,7 @@ func main() {
 	// Define routes
 	router.GET("/gifts", giftController.ListGifts)
 	router.POST("/gifts/:id/reserve", giftController.ReserveGift)
+	router.POST("/gifts/:id/unreserve", giftController.UnreserveGift)
 
 	// Start server
 	if err := router.Run(":8080"); err != nil {
