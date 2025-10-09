@@ -13,6 +13,14 @@ import (
 )
 
 func main() {
+	// Initialize Redis from environment variable
+	redisURL := os.Getenv("REDIS_URL")
+	if redisURL == "" {
+		log.Printf("Warning: REDIS_URL not set, caching will be disabled")
+	} else if err := cache.InitRedis(redisURL); err != nil {
+		log.Printf("Warning: Failed to connect to Redis: %v", err)
+	}
+
 	// Initialize database
 	db, err := gorm.Open(sqlite.Open("gifts.db"), &gorm.Config{})
 	if err != nil {
