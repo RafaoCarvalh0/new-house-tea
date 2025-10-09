@@ -86,3 +86,21 @@ th {
     background-color: #cccccc;
     cursor: not-allowed;
 }
+
+.unreserve-button {
+    background-color: #af4c4c;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.unreserve-button:hover {
+    background-color: #a04545;
+}
+
+.unreserve-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
