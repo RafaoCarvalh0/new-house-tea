@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://new-house-tea-production.up.railway.app';
 
 // Function to load gifts from the backend
 async function loadGifts() {
