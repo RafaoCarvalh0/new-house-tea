@@ -18,7 +18,7 @@ func NewGiftController(redis *redis.Client) *GiftController {
 	return &GiftController{Redis: redis}
 }
 
-// ListGifts returns all unreserved gifts
+// ListGifts returns all gifts
 func (gc *GiftController) ListGifts(c *gin.Context) {
 	ctx := context.Background()
 
@@ -41,9 +41,8 @@ func (gc *GiftController) ListGifts(c *gin.Context) {
 			continue
 		}
 
-		if !gift.Reserved {
-			gifts = append(gifts, gift)
-		}
+		gifts = append(gifts, gift)
+
 	}
 
 	c.JSON(http.StatusOK, gifts)
