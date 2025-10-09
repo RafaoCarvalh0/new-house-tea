@@ -22,8 +22,14 @@ function displayGifts(gifts) {
         row.innerHTML = `
             <td><img src="${gift.image_url}" alt="${gift.description}" class="gift-image"></td>
             <td>${gift.description}</td>
-            <td><a href="${gift.purchase_url}" target="_blank" class="buy-link">Ver produto</a></td>
-            <td><button onclick="reserveGift(${gift.id})" class="reserve-button">Reservar</button></td>
+            <td><a href="${gift.link}" target="_blank" class="buy-link">Ver produto de referência</a></td>
+            <td>
+                ${
+                    gift.reserved
+                        ? `<button onclick="unreserveGift(${gift.id})" class="unreserve-button">Remover reserva</button>`
+                        : `<button onclick="reserveGift(${gift.id})" class="reserve-button">Reservar</button>`
+                }
+            </td>
         `;
         giftsList.appendChild(row);
     });
@@ -48,6 +54,28 @@ async function reserveGift(giftId) {
     } catch (error) {
         console.error('Error reserving gift:', error);
         alert('Erro ao reservar o presente. Por favor, tente novamente.');
+    }
+}
+
+// Function to unreserve a gift
+async function unreserveGift(giftId) {
+    const passkey = prompt('Digite a senha de administrador para remover a reserva:');
+    if (!passkey) return;
+
+    try {
+        const response = await fetch(`${API_URL}/gifts/${giftId}/unreserve?passkey=${encodeURIComponent(passkey)}`, {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            alert('Reserva removida com sucesso!');
+            loadGifts();
+        } else {
+            alert('Senha incorreta.');
+        }
+    } catch (error) {
+        console.error('Error removing reservation:', error);
+        alert('Erro ao remover a reserva. Por favor, tente novamente.');
     }
 }
 
