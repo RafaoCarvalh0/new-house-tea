@@ -1,6 +1,0 @@
-SET gift:1 "{\"id\":\"1\",\"name\":\"Cafeteira Elétrica\",\"link\":\"https://www.magazineluiza.com.br/cafeteira/p/123456/\",\"description\":\"Cafeteira elétrica 110V com capacidade para 15 cafezinhos.\",\"reserved\":false}"
-
-SET gift:2 "{\"id\":\"2\",\"name\":\"Fone Bluetooth JBL\",\"link\":\"https://www.amazon.com.br/fone-jbl-wireless/p/654321/\",\"description\":\"Fone de ouvido sem fio com cancelamento de ruído.\",\"reserved\":false}"
-
-SET gift:3 "{\"id\":\"3\",\"name\":\"Kit de Taças de Vinho\",\"link\":\"https://www.casasbahia.com.br/kit-tacas/p/789012/\",\"description\":\"Conjunto com 6 taças de cristal, ideal para jantares.\",\"reserved\":false}"
-

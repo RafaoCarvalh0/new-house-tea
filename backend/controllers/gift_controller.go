@@ -91,3 +91,64 @@ func (gc *GiftController) ReserveGift(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Gift reserved successfully!"})
 }
+
+// RemoveGiftReservation removes a gift reservation if the correct admin passkey is provided
+func (gc *GiftController) RemoveGiftReservation(c *gin.Context) {
+	ctx := context.Background()
+	id := c.Param("id")
+	passkey := c.Query("passkey") // pode ser enviado como query param ?passkey=1234
+
+	// Verifica se a passkey foi informada
+	if passkey == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Missing passkey"})
+		return
+	}
+
+	// Busca a admKey no Redis
+	storedKey, err := gc.Redis.Get(ctx, "admKey").Result()
+	if err == redis.Nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Admin key not set in Redis"})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching admin key"})
+		return
+	}
+
+	// Valida a passkey
+	if passkey != storedKey {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid passkey"})
+		return
+	}
+
+	// Busca o gift
+	giftJSON, err := gc.Redis.Get(ctx, "gift:"+id).Result()
+	if err == redis.Nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Gift not found"})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching gift"})
+		return
+	}
+
+	var gift models.Gift
+	if err := json.Unmarshal([]byte(giftJSON), &gift); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error parsing gift data"})
+		return
+	}
+
+	// Atualiza o campo Reserved
+	gift.Reserved = false
+
+	updatedJSON, err := json.Marshal(gift)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error serializing gift"})
+		return
+	}
+
+	if err := gc.Redis.Set(ctx, "gift:"+id, updatedJSON, 0).Err(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error saving gift"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Gift reservation removed successfully!"})
+}
