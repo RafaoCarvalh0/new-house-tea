@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Habilitando CGO e compilando o projeto
 ENV CGO_ENABLED=1
-RUN go mod download
+RUN go mod tidy
 RUN go build -o main .
 
 # Configurando a porta
