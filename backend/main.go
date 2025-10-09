@@ -32,7 +32,14 @@ func main() {
 		// Read and execute init.sql
 		sqlBytes, err := os.ReadFile("init.sql")
 		if err == nil {
-			db.Exec(string(sqlBytes))
+			// First, check if any items from init.sql already exist
+			var existingGifts []models.Gift
+			db.Find(&existingGifts)
+			
+			// Only insert new items that don't exist yet
+			if len(existingGifts) == 0 {
+				db.Exec(string(sqlBytes))
+			}
 		}
 	}
 
