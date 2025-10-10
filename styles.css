@@ -1,9 +1,148 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif; /* Fonte mais moderna e atraente */
+    font-size: 20px; /* Aumentando ainda mais o tamanho do texto */
+    line-height: 2; /* Melhorando o espaçamento entre linhas */
+    background: linear-gradient(-45deg, #0f0f23, #1a1a2e, #16213e, #0f3460, #533483, #7209b7, #2d1b69, #1e3a8a, #155e75, #164e63, #0f172a, #1e1b4b);
+    background-size: 600% 600%;
+    animation: gradientShift 12s ease-in-out infinite;
+    color: #dcdcdc; /* Cinza claro */
+    position: relative;
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
+
+/* Animação do background gradiente */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Estrelas piscantes no background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+        radial-gradient(1px 1px at 200px 90px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 240px 50px, #fff, transparent),
+        radial-gradient(1px 1px at 280px 20px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 320px 100px, #fff, transparent),
+        radial-gradient(2px 2px at 360px 60px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 400px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 440px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 480px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 520px 90px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 560px 20px, #fff, transparent),
+        radial-gradient(1px 1px at 600px 70px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 640px 50px, #fff, transparent),
+        radial-gradient(2px 2px at 680px 10px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 720px 80px, #fff, transparent),
+        radial-gradient(1px 1px at 760px 40px, rgba(255,255,255,0.6), transparent);
+    background-repeat: repeat;
+    background-size: 800px 100px;
+    animation: sparkle 3s linear infinite;
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* Animação de piscar das estrelas */
+@keyframes sparkle {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+/* Estrelas adicionais para mais densidade */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 50px 100px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 100px 150px, #fff, transparent),
+        radial-gradient(2px 2px at 150px 200px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 200px 250px, #fff, transparent),
+        radial-gradient(1px 1px at 250px 300px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 300px 350px, #fff, transparent),
+        radial-gradient(1px 1px at 350px 400px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 400px 450px, #fff, transparent),
+        radial-gradient(2px 2px at 450px 500px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 500px 550px, #fff, transparent);
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    animation: sparkle 4s linear infinite reverse;
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* Container para os GIFs de background */
+.background-gifs {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Fica atrás de todo o conteúdo */
+    pointer-events: none; /* Não interfere com cliques */
+}
+
+/* Estilos gerais para os GIFs de background */
+.bg-gif {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    transform: translateY(-80px); /* Move todos os GIFs 50px para cima */
+}
+
+/* Posicionamento individual de cada GIF em cascata nas laterais */
+/* Lado esquerdo - Coluna 1 (4 GIFs) - Mais próximos do centro */
+.gif-2 { top: 10%; left: 8%; z-index: -10;}
+.gif-3 { top: 35%; left: 8%; }
+.gif-5 { top: 60%; left: 8%; z-index: -5;}
+.gif-7 { top: 85%; left: 8%; }
+
+/* Lado esquerdo - Coluna 2 (4 GIFs) - Mais próximos do centro */
+.gif-9 { top: 10%; left: 20%; }
+.gif-12 { top: 35%; left: 8%; z-index: -6;}
+.gif-16 { top: 8%; left: 32%; z-index: -11; }
+.gif-17 { top: 85%; left: 32%; }
+
+/* Lado direito - Coluna 1 (4 GIFs) - Mais próximos do centro */
+.gif-4 { top: 10%; right: 8%; }
+.gif-6 { top: 35%; right: 8%; }
+.gif-8 { top: 60%; right: 8%; }
+.gif-10 { top: 85%; right: 8%; }
+
+/* Lado direito - Coluna 2 (3 GIFs) - Mais próximos do centro */
+.gif-11 { top: 10%; right: 20%; }
+.gif-13 { top: 10%; right: 32%; z-index: -11;}
+.gif-14 { top: 85%; right: 32%; }
 
 .welcome-container {
     height: 100vh;
@@ -13,35 +152,62 @@ body {
     align-items: center;
     text-align: center;
     padding: 20px;
+    position: relative;
+    z-index: 1; /* Garante que o conteúdo fique acima dos GIFs */
+    max-width: 90%;
+    margin: 0 auto;
+    gap: 10px; /* Espaçamento uniforme entre os elementos */
+}
+
+/* Adicionando a imagem entre o texto e o botão */
+.welcome-container .photo {
+    display: block;
+    margin: 5px auto; /* Reduzindo margem para ficar mais próximo do título */
+    max-width: 100%; /* Responsivo para mobile */
+    width: 100%;
+    max-width: 500px; /* Tamanho máximo para desktop */
+    height: auto; /* Mantém a proporção */
+    border-radius: 8px; /* Bordas arredondadas para estética */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para destacar a imagem */
+    position: relative;
+    z-index: 2; /* Garantindo que fique acima dos GIFs */
 }
 
 .main-button {
-    padding: 20px 40px;
-    font-size: 24px;
-    background-color: #4CAF50;
+    padding: 25px 50px; /* Aumentando o padding para tornar o botão maior */
+    font-size: 28px; /* Aumentando o tamanho da fonte */
+    background-color: #4CAF50; /* Verde suave */
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 10px; /* Reduzindo margem superior */
     transition: background-color 0.3s;
+    width: 100%;
+    max-width: 400px; /* Aumentando a largura máxima */
+    position: relative;
+    z-index: 2; /* Garantindo que fique acima dos GIFs */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
 }
 
 .main-button:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Verde mais escuro */
 }
 
 .list-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 1200px; /* Largura máxima */
+    margin: 20px auto; /* Centralizando na página */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #3a3939; /* Fundo escuro para destaque */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    background-color: #2c2c2c; /* Fundo mais claro para reduzir contraste */
+    color: #e0e0e0;
 }
 
 th, td {
@@ -72,10 +238,11 @@ th {
 .reserve-button {
     background-color: #4CAF50;
     color: white;
-    padding: 8px 16px;
+    padding: 15px 20px; /* Aumentando o padding */
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1.2rem; /* Aumentando o tamanho da fonte */
 }
 
 .reserve-button:hover {
@@ -90,10 +257,11 @@ th {
 .unreserve-button {
     background-color: #af4c4c;
     color: white;
-    padding: 8px 16px;
+    padding: 15px 20px; /* Aumentando o padding */
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1.2rem; /* Aumentando o tamanho da fonte */
 }
 
 .unreserve-button:hover {
@@ -103,4 +271,228 @@ th {
 .unreserve-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+}
+
+tr.reserved {
+    background-color: #a02e2e6b; /* Fundo mais escuro para destacar */
+    border-left: 4px solid #ff4d4d; /* Borda vermelha leve para itens reservados */
+    color: #e0e0e0; /* Mantendo o texto legível */
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centralizando horizontalmente */
+    gap: 0; /* Removendo espaçamento entre os GIFs e o texto */
+    margin-bottom: 20px;
+}
+
+.images-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Garantindo que as imagens respeitem os limites do container */
+    gap: 12%; /* Espaçamento de 5% entre as imagens */
+    margin-top: 10px;
+}
+
+.title-image {
+    width: 8rem; /* Ajustando o tamanho para ser igual ao texto */
+    height: 8rem; /* Mantendo proporção */
+    margin-left: 0%; /* Garantindo que os GIFs fiquem colados ao texto */
+}
+
+.welcome {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 0 10px 0; /* Reduzindo margem inferior para ficar mais próximo da imagem */
+    text-align: center;
+    line-height: 1.2;
+    max-width: 100%;
+    background-color: rgba(61, 61, 61, 0.377); /* Background preto semi-transparente */
+    padding: 15px 20px; /* Padding para dar espaço ao texto */
+    border-radius: 10px; /* Bordas arredondadas */
+    backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    position: relative;
+    z-index: 2; /* Garantindo que fique acima dos GIFs */
+}
+
+p.info-message {
+    text-align: center;
+    font-size: 1.5rem; /* Tornando as mensagens mais legíveis */
+    margin-bottom: 15px;
+    color: #e0e0e0; /* Mantendo o contraste no modo escuro */
+}
+
+.info-message.basic {
+    font-size: xx-large;
+    font-weight: bold; /* Adicionando negrito */
+    color: rgb(255, 255, 255); /* Alterando a cor para verde */
+    position: relative; /* Necessário para o efeito de hover */
+}
+
+.info-message.reference {
+    text-transform: uppercase; /* Transformando o texto em maiúsculo */
+    font-weight: bold; /* Adicionando negrito */
+    color: rgb(3, 205, 255); /* Alterando a cor para verde */
+    position: relative; /* Necessário para o efeito de hover */
+}
+
+.info-message.pix-key {
+    font-weight: bold; /* Adicionando negrito */
+    font-size: larger;
+    text-decoration: underline;
+    color: rgb(255, 230, 3); /* Alterando a cor para verde */
+    position: relative; /* Necessário para o efeito de hover */
+}
+
+/* Estilizando o texto "PIX COMO PRESENTE" */
+.info-message.pix {
+    text-transform: uppercase; /* Transformando o texto em maiúsculo */
+    font-weight: bold; /* Adicionando negrito */
+    color: green; /* Alterando a cor para verde */
+    position: relative; /* Necessário para o efeito de hover */
+}
+
+.info-message.pix:hover::after {
+    content: url('bob_money-removebg-preview.png'); /* Exibindo a imagem acima do cursor */
+    position: absolute;
+    top: -300px; /* Ajustando a posição acima do cursor */
+    right: 170px; /* Centralizando horizontalmente */
+}
+
+.info-container {
+    background-color: #2a2a2a; /* Fundo cinza escuro */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    margin-bottom: 20px; /* Espaçamento externo */
+    color: #e0e0e0; /* Cor do texto */
+}
+
+/* Estilos aprimorados para o modo escuro */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #181818;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  header, footer {
+    background-color: #20202000;
+    color: #e0e0e0;
+  }
+
+  a {
+    color: #8ab4f8;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  button {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 15px 20px; /* Aumentando o padding */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem; /* Aumentando o tamanho da fonte */
+  }
+
+  button:hover {
+    background-color: #3a3a3a;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2c2c2c; /* Fundo mais claro para reduzir contraste */
+    color: #e0e0e0;
+  }
+
+  th, td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #2a2a2a;
+  }
+
+  .back-button {
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+}
+
+/* Media Queries para responsividade mobile */
+@media (max-width: 768px) {
+  /* Título responsivo */
+  h1 {
+    font-size: 2.2rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    padding: 12px 15px;
+    background-color: rgba(0, 0, 0, 0.85); /* Background mais opaco no mobile */
+    border-radius: 8px;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Container principal */
+  .welcome-container {
+    padding: 15px;
+    max-width: 95%;
+    min-height: 100vh;
+    gap: 8px;
+  }
+
+  /* Foto responsiva */
+  .welcome-container .photo {
+    max-width: 90%;
+    margin: 5px auto;
+  }
+
+  /* Botão responsivo */
+  .main-button {
+    padding: 18px 35px; /* Aumentando proporcionalmente para tablet */
+    font-size: 24px; /* Aumentando a fonte */
+    margin-top: 8px;
+    width: 90%;
+    max-width: 350px; /* Aumentando a largura máxima */
+  }
+
+  /* Reposicionar GIFs para mobile */
+  .gif-9, .gif-12, .gif-16, .gif-17,
+  .gif-11, .gif-13, .gif-14 {
+    display: none; /* Ocultar segunda coluna no mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Título ainda menor para telas muito pequenas */
+  h1 {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    padding: 10px 12px;
+    background-color: rgba(0, 0, 0, 0.9); /* Background ainda mais opaco */
+    border-radius: 6px;
+  }
+
+  /* Foto menor */
+  .welcome-container .photo {
+    max-width: 85%;
+  }
+
+  /* Botão menor */
+  .main-button {
+    padding: 15px 25px; /* Aumentando para mobile pequeno */
+    font-size: 20px; /* Aumentando a fonte */
+    width: 85%;
+  }
 }

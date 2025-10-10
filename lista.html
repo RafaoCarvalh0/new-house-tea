@@ -8,7 +8,27 @@
 </head>
 <body>
     <div class="list-container">
-        <h1>Lista de Presentes</h1>
+        <header>
+            <button onclick="window.location.href='index.html'" class="back-button">Voltar à Tela Inicial</button>
+        </header>
+        <!-- Ajustando o container para posicionar os GIFs ao lado do texto -->
+        <div class="title-container">
+            <img src="gift-present.gif" alt="Presente" class="title-image"> <!-- GIF à esquerda -->
+            <h1>Lista de Presentes</h1>
+            <img src="gift-present.gif" alt="Presente" class="title-image"> <!-- GIF à direita -->
+        </div>
+        <div class="images-container">
+            <img src="gift.png" alt="Presente" class="title-image">
+            <img src="rat-dancing-meme.gif" alt="Rat Dancing GIF" class="title-image"> <!-- Novo GIF adicionado -->
+            <img src="cat_gift.png" alt="Presente com gato" class="title-image"> <!-- Segunda imagem -->
+            <img src="bee-eyebrows.gif" alt="Bee Eyebrows GIF" class="title-image"> <!-- Último GIF -->
+        </div>
+        <div class="info-container">
+            <p class="info-message basic">Esses presentes são somente sugestões de coisas que precisamos para casa. Por favor, reserve para evitar presentes repetidos.</p>
+            <p class="info-message"><span class="info-message reference">Você não precisa comprar o que está na referência</span>, pode comprar na loja que preferir.</p>
+            <p class="info-message">Também aceitamos <span class="info-message pix">PIX como presente</span>, caso prefira não comprar nada.</p> <!-- Adicionando uma classe específica para o texto "PIX COMO PRESENTE" -->
+            <p class="info-message">Chave pix: <span class="info-message pix-key">331.280.298-90</span></p>
+        </div>
         <table id="gifts-table">
             <thead>
                 <tr>

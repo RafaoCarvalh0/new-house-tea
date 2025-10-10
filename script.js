@@ -19,6 +19,7 @@ function displayGifts(gifts) {
     giftsList.innerHTML = '';
     gifts.forEach(gift => {
         const row = document.createElement('tr');
+        row.className = gift.reserved ? 'reserved' : ''; // Adiciona a classe 'reserved' se o item estiver reservado
         row.innerHTML = `
             <td><img src="${gift.image_url}" alt="${gift.description}" class="gift-image"></td>
             <td>${gift.description}</td>
