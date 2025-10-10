@@ -17,23 +17,72 @@ function displayGifts(gifts) {
     if (!giftsList) return;
 
     giftsList.innerHTML = '';
-    gifts.forEach(gift => {
-        const row = document.createElement('tr');
-        row.className = gift.reserved ? 'reserved' : ''; // Adiciona a classe 'reserved' se o item estiver reservado
-        row.innerHTML = `
-            <td><img src="${gift.image_url}" alt="${gift.description}" class="gift-image"></td>
-            <td>${gift.description}</td>
-            <td><a href="${gift.link}" target="_blank" class="buy-link">Ver produto de referência</a></td>
-            <td>
+    
+    // Detectar se é mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Criar cards para mobile
+        const container = giftsList.parentElement.parentElement; // Pegar o container da tabela
+        
+        // Criar div para cards se não existir
+        let mobileContainer = document.getElementById('mobile-gifts-container');
+        if (!mobileContainer) {
+            mobileContainer = document.createElement('div');
+            mobileContainer.id = 'mobile-gifts-container';
+            container.appendChild(mobileContainer);
+        }
+        
+        mobileContainer.innerHTML = '';
+        
+        gifts.forEach(gift => {
+            const card = document.createElement('div');
+            card.className = `mobile-card ${gift.reserved ? 'reserved' : ''}`;
+            card.innerHTML = `
+                <img src="${gift.image_url}" alt="${gift.description}">
+                <h3>${gift.description}</h3>
+                <a href="${gift.link}" target="_blank" class="buy-link">Ver produto de referência</a>
                 ${
                     gift.reserved
                         ? `<button onclick="unreserveGift(${gift.id})" class="unreserve-button">Remover reserva</button>`
                         : `<button onclick="reserveGift(${gift.id})" class="reserve-button">Reservar</button>`
                 }
-            </td>
-        `;
-        giftsList.appendChild(row);
-    });
+            `;
+            mobileContainer.appendChild(card);
+        });
+        
+        // Esconder tabela no mobile
+        document.getElementById('gifts-table').style.display = 'none';
+        
+    } else {
+        // Layout desktop normal
+        gifts.forEach(gift => {
+            const row = document.createElement('tr');
+            row.className = gift.reserved ? 'reserved' : '';
+            row.innerHTML = `
+                <td><img src="${gift.image_url}" alt="${gift.description}" class="gift-image"></td>
+                <td>${gift.description}</td>
+                <td><a href="${gift.link}" target="_blank" class="buy-link">Ver produto de referência</a></td>
+                <td>
+                    ${
+                        gift.reserved
+                            ? `<button onclick="unreserveGift(${gift.id})" class="unreserve-button">Remover reserva</button>`
+                            : `<button onclick="reserveGift(${gift.id})" class="reserve-button">Reservar</button>`
+                    }
+                </td>
+            `;
+            giftsList.appendChild(row);
+        });
+        
+        // Mostrar tabela no desktop
+        document.getElementById('gifts-table').style.display = 'table';
+        
+        // Remover container mobile se existir
+        const mobileContainer = document.getElementById('mobile-gifts-container');
+        if (mobileContainer) {
+            mobileContainer.remove();
+        }
+    }
 }
 
 // Function to reserve a gift
@@ -83,4 +132,13 @@ async function unreserveGift(giftId) {
 // Load gifts when the list page is opened
 if (window.location.pathname.includes('lista.html')) {
     loadGifts();
+    
+    // Adicionar listener para redimensionamento da tela
+    window.addEventListener('resize', () => {
+        // Aguardar um pouco para evitar múltiplas execuções
+        clearTimeout(window.resizeTimeout);
+        window.resizeTimeout = setTimeout(() => {
+            loadGifts(); // Recarregar para ajustar o layout
+        }, 250);
+    });
 }

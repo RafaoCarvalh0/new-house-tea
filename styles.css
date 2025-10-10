@@ -121,28 +121,17 @@ body::after {
 }
 
 /* Posicionamento individual de cada GIF em cascata nas laterais */
-/* Lado esquerdo - Coluna 1 (4 GIFs) - Mais próximos do centro */
-.gif-2 { top: 10%; left: 8%; z-index: -10;}
-.gif-3 { top: 35%; left: 8%; }
-.gif-5 { top: 60%; left: 8%; z-index: -5;}
+/* Lado esquerdo */
+.gif-2 { top: 10%; left: 8%; z-index: -10; }
+.gif-5 { top: 60%; left: 8%; z-index: -5; }
 .gif-7 { top: 85%; left: 8%; }
+.gif-12 { top: 35%; left: 8%; z-index: -6; }
 
-/* Lado esquerdo - Coluna 2 (4 GIFs) - Mais próximos do centro */
-.gif-9 { top: 10%; left: 20%; }
-.gif-12 { top: 35%; left: 8%; z-index: -6;}
-.gif-16 { top: 8%; left: 32%; z-index: -11; }
-.gif-17 { top: 85%; left: 32%; }
-
-/* Lado direito - Coluna 1 (4 GIFs) - Mais próximos do centro */
+/* Lado direito */
 .gif-4 { top: 10%; right: 8%; }
 .gif-6 { top: 35%; right: 8%; }
 .gif-8 { top: 60%; right: 8%; }
 .gif-10 { top: 85%; right: 8%; }
-
-/* Lado direito - Coluna 2 (3 GIFs) - Mais próximos do centro */
-.gif-11 { top: 10%; right: 20%; }
-.gif-13 { top: 10%; right: 32%; z-index: -11;}
-.gif-14 { top: 85%; right: 32%; }
 
 .welcome-container {
     height: 100vh;
@@ -238,11 +227,14 @@ th {
 .reserve-button {
     background-color: #4CAF50;
     color: white;
-    padding: 15px 20px; /* Aumentando o padding */
+    padding: 18px 25px; /* Aumentando o padding */
     border: none;
-    border-radius: 4px;
+    border-radius: 8px; /* Padronizando com outros botões */
     cursor: pointer;
-    font-size: 1.2rem; /* Aumentando o tamanho da fonte */
+    font-size: 1.6rem; /* Aumentando ainda mais o tamanho da fonte */
+    font-family: 'Roboto', sans-serif; /* Padronizando a fonte */
+    font-weight: bold; /* Deixando o texto em negrito */
+    transition: background-color 0.3s ease; /* Adicionando transição suave */
 }
 
 .reserve-button:hover {
@@ -257,11 +249,14 @@ th {
 .unreserve-button {
     background-color: #af4c4c;
     color: white;
-    padding: 15px 20px; /* Aumentando o padding */
+    padding: 18px 25px; /* Aumentando o padding */
     border: none;
-    border-radius: 4px;
+    border-radius: 8px; /* Padronizando com outros botões */
     cursor: pointer;
-    font-size: 1.2rem; /* Aumentando o tamanho da fonte */
+    font-size: 1.6rem; /* Aumentando ainda mais o tamanho da fonte */
+    font-family: 'Roboto', sans-serif; /* Padronizando a fonte */
+    font-weight: bold; /* Deixando o texto em negrito */
+    transition: background-color 0.3s ease; /* Adicionando transição suave */
 }
 
 .unreserve-button:hover {
@@ -369,6 +364,11 @@ p.info-message {
     color: #e0e0e0; /* Cor do texto */
 }
 
+/* Ocultar GIFs extras no desktop */
+.mobile-only {
+    display: none;
+}
+
 /* Estilos aprimorados para o modo escuro */
 @media (prefers-color-scheme: dark) {
   body {
@@ -467,10 +467,50 @@ p.info-message {
     max-width: 350px; /* Aumentando a largura máxima */
   }
 
-  /* Reposicionar GIFs para mobile */
-  .gif-9, .gif-12, .gif-16, .gif-17,
-  .gif-11, .gif-13, .gif-14 {
-    display: none; /* Ocultar segunda coluna no mobile */
+  /* GIFs específicos para mobile - 6 GIFs organizados */
+  .gif-2, .gif-6 {
+    display: none; /* Ocultar apenas estes 2 GIFs */
+  }
+  
+  /* Topo - 3 GIFs lado a lado */
+  .gif-4 { 
+    top: 10%; 
+    left: 25%; 
+    transform: translateX(-50%) translateY(-80px); /* Esquerda no topo */
+  }
+  
+  .gif-12 { 
+    top: 10%; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(-80px); /* Centro no topo */
+  }
+  
+  .gif-5 { 
+    top: 10%; 
+    left: 75%; 
+    transform: translateX(-50%) translateY(-80px); /* Direita no topo */
+  }
+  
+  /* Baixo - 3 GIFs lado a lado */
+  .gif-7 { 
+    bottom: 10%; 
+    left: 25%; 
+    top: auto;
+    transform: translateX(-50%) translateY(80px); /* Esquerda embaixo */
+  }
+  
+  .gif-10 { 
+    bottom: 10%; 
+    left: 50%; 
+    top: auto;
+    transform: translateX(-50%) translateY(80px); /* Centro embaixo */
+  }
+  
+  .gif-8 { 
+    bottom: 10%; 
+    left: 75%; 
+    top: auto;
+    transform: translateX(-50%) translateY(80px); /* Direita embaixo */
   }
 }
 
@@ -494,5 +534,289 @@ p.info-message {
     padding: 15px 25px; /* Aumentando para mobile pequeno */
     font-size: 20px; /* Aumentando a fonte */
     width: 85%;
+  }
+
+  /* GIFs ainda menores para mobile pequeno */
+  .gif-4, .gif-5, .gif-7, .gif-8, .gif-10, .gif-12 {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  /* Topo - 3 GIFs menores */
+  .gif-4 { 
+    top: 8%; 
+    left: 25%;
+    transform: translateX(-50%) translateY(-60px);
+  }
+  
+  .gif-12 { 
+    top: 8%; 
+    left: 50%;
+    transform: translateX(-50%) translateY(-60px);
+  }
+  
+  .gif-5 { 
+    top: 8%; 
+    left: 75%;
+    transform: translateX(-50%) translateY(-60px);
+  }
+  
+  /* Baixo - 3 GIFs menores */
+  .gif-7 { 
+    bottom: 8%; 
+    left: 25%;
+    transform: translateX(-50%) translateY(60px);
+  }
+  
+  .gif-10 { 
+    bottom: 8%; 
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+  }
+  
+  .gif-8 { 
+    bottom: 8%; 
+    left: 75%;
+    transform: translateX(-50%) translateY(60px);
+  }
+}
+
+/* Media Queries específicas para a página da lista */
+@media (max-width: 768px) {
+  /* Container da lista responsivo */
+  .list-container {
+    max-width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  /* Título da lista responsivo */
+  .title-container {
+    flex-direction: row; /* Manter horizontal no mobile */
+    align-items: center;
+    justify-content: center;
+    gap: 15px; /* Espaçamento entre GIF-texto-GIF */
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Permite quebra se necessário */
+  }
+
+  .title-container h1 {
+    font-size: 2rem;
+    margin: 0;
+    text-align: center;
+    flex: 0 1 auto; /* Não cresce, mas pode encolher */
+  }
+
+  /* Imagens do título - tamanho adequado para mobile */
+  .title-image {
+    width: 3rem; /* Menor para caber melhor */
+    height: 3rem;
+    flex-shrink: 0; /* Não encolhe */
+  }
+
+  /* Container de imagens responsivo */
+  .images-container {
+    gap: 5%;
+    margin-top: 15px;
+    justify-content: center;
+  }
+
+  /* Tamanho 300% maior das imagens no container para mobile */
+  .images-container .title-image {
+    width: 7.5rem; /* 2.5rem × 300% = 7.5rem */
+    height: 7.5rem;
+    max-width: 7.5rem; /* Garantir tamanho máximo */
+    max-height: 7.5rem;
+  }
+
+  /* Mostrar GIFs extras apenas no mobile */
+  .mobile-only {
+    display: block !important;
+  }
+
+  /* Info container responsivo */
+  .info-container {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .info-message {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  /* Textos coloridos maiores no tablet */
+  .info-message.basic {
+    font-size: 1.3rem; /* Texto branco menor que os coloridos */
+  }
+
+  .info-message.reference {
+    font-size: 1.6rem; /* Azul - maior que o branco */
+  }
+
+  .info-message.pix {
+    font-size: 1.6rem; /* Verde PIX - maior que o branco */
+  }
+
+  .info-message.pix-key {
+    font-size: 1.8rem; /* Amarelo chave PIX - o maior de todos */
+  }
+
+  /* Comportamento mobile para PIX - mostrar imagem ao pressionar */
+  .info-message.pix:hover::after {
+    display: none; /* Desabilitar hover no mobile */
+  }
+  
+  .info-message.pix:active::after {
+    content: url('bob_money-removebg-preview.png'); /* Exibir imagem ao pressionar */
+    position: absolute;
+    top: -200px; /* Ajustar posição para mobile */
+    left: 50%;
+    transform: translateX(-50%); /* Centralizar horizontalmente */
+    z-index: 1000; /* Garantir que fique acima de tudo */
+  }
+
+  /* Tabela responsiva - layout em cards */
+  table {
+    display: none; /* Esconder tabela tradicional */
+  }
+
+  /* Criar layout de cards para mobile */
+  .mobile-card {
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4CAF50;
+  }
+
+  .mobile-card img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .mobile-card h3 {
+    color: #4CAF50;
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+  }
+
+  .mobile-card p {
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+
+  .mobile-card .buy-link {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .mobile-card button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.4rem; /* Aumentando a fonte */
+    font-family: 'Roboto', sans-serif; /* Padronizando a fonte */
+    font-weight: bold; /* Deixando o texto em negrito */
+    border-radius: 8px; /* Padronizando as bordas */
+    transition: background-color 0.3s ease; /* Adicionando transição suave */
+  }
+
+  /* Card reservado no mobile */
+  .mobile-card.reserved {
+    background-color: #a02e2e6b;
+    border-left: 4px solid #ff4d4d;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Lista ultra responsiva para mobile pequeno */
+  .list-container {
+    max-width: 98%;
+    padding: 10px;
+  }
+
+  .title-container h1 {
+    font-size: 1.6rem;
+  }
+
+  /* GIFs do título ainda menores para mobile pequeno */
+  .title-container .title-image {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* Imagens do container 300% maiores para mobile pequeno */
+  .images-container .title-image {
+    width: 6rem; /* 2rem × 300% = 6rem */
+    height: 6rem;
+    max-width: 6rem;
+    max-height: 6rem;
+  }
+
+  /* Garantir que GIFs extras continuem visíveis no mobile pequeno */
+  .mobile-only {
+    display: block !important;
+  }
+
+  .images-container {
+    gap: 3%;
+  }
+
+  .info-message {
+    font-size: 1rem;
+  }
+
+  .info-message.basic {
+    font-size: 1.1rem; /* Texto branco menor que os coloridos */
+  }
+
+  /* Textos coloridos maiores no mobile */
+  .info-message.reference {
+    font-size: 1.4rem; /* Azul - maior que o branco */
+  }
+
+  .info-message.pix {
+    font-size: 1.4rem; /* Verde PIX - maior que o branco */
+  }
+
+  .info-message.pix-key {
+    font-size: 1.5rem; /* Amarelo chave PIX - o maior de todos */
+  }
+
+  /* Comportamento mobile para PIX - mostrar imagem ao pressionar */
+  .info-message.pix:hover::after {
+    display: none; /* Desabilitar hover no mobile pequeno */
+  }
+  
+  .info-message.pix:active::after {
+    content: url('bob_money-removebg-preview.png'); /* Exibir imagem ao pressionar */
+    position: absolute;
+    top: -150px; /* Posição menor para telas pequenas */
+    left: 50%;
+    transform: translateX(-50%); /* Centralizar horizontalmente */
+    z-index: 1000; /* Garantir que fique acima de tudo */
+  }
+
+  .mobile-card {
+    padding: 12px;
+  }
+
+  .mobile-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .mobile-card p {
+    font-size: 0.9rem;
+  }
+
+  /* Botões dos cards em mobile pequeno */
+  .mobile-card button {
+    padding: 12px;
+    font-size: 1.2rem; /* Menor que tablet mas ainda legível */
   }
 }
