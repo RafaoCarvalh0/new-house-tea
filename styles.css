@@ -320,10 +320,12 @@ p.info-message {
 }
 
 .info-message.basic {
-    font-size: xx-large;
+    font-size: 2.5rem; /* Muito maior para chamar atenção */
     font-weight: bold; /* Adicionando negrito */
     color: rgb(255, 255, 255); /* Alterando a cor para verde */
     position: relative; /* Necessário para o efeito de hover */
+    line-height: 1.3; /* Melhor espaçamento entre linhas */
+    margin-bottom: 25px; /* Mais espaço abaixo */
 }
 
 .info-message.reference {
@@ -362,6 +364,62 @@ p.info-message {
     border-radius: 8px; /* Bordas arredondadas */
     margin-bottom: 20px; /* Espaçamento externo */
     color: #e0e0e0; /* Cor do texto */
+    position: relative; /* Para posicionamento da imagem */
+}
+
+/* Estilo da imagem do Bob Money quando ativada por JavaScript */
+.pix-image {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    max-width: 200px;
+    height: auto;
+    display: none; /* Inicialmente escondida */
+    transition: opacity 0.3s ease; /* Transição suave */
+}
+
+/* Ajustar tamanho da imagem PIX no mobile - MUITO MAIOR e sem bordas */
+@media (max-width: 768px) {
+    .pix-image {
+        max-width: 300px; /* Muito maior no mobile */
+        top: 15%;
+        border-radius: 0; /* Sem bordas arredondadas */
+        box-shadow: none; /* Sem sombra */
+    }
+}
+
+@media (max-width: 480px) {
+    .pix-image {
+        max-width: 250px; /* Grande mesmo em telas pequenas */
+        top: 20%;
+        border-radius: 0; /* Sem bordas arredondadas */
+        box-shadow: none; /* Sem sombra */
+    }
+}
+
+/* Mensagem de feedback para cópia da chave PIX */
+.copy-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.copy-feedback.show {
+    opacity: 1;
 }
 
 /* Ocultar GIFs extras no desktop */
@@ -647,7 +705,9 @@ p.info-message {
 
   /* Textos coloridos maiores no tablet */
   .info-message.basic {
-    font-size: 1.3rem; /* Texto branco menor que os coloridos */
+    font-size: 2rem; /* Muito maior para chamar atenção no tablet */
+    line-height: 1.3; /* Melhor espaçamento entre linhas */
+    margin-bottom: 20px; /* Mais espaço abaixo */
   }
 
   .info-message.reference {
@@ -662,18 +722,9 @@ p.info-message {
     font-size: 1.8rem; /* Amarelo chave PIX - o maior de todos */
   }
 
-  /* Comportamento mobile para PIX - mostrar imagem ao pressionar */
+  /* Comportamento mobile para PIX - sem hover */
   .info-message.pix:hover::after {
     display: none; /* Desabilitar hover no mobile */
-  }
-  
-  .info-message.pix:active::after {
-    content: url('bob_money-removebg-preview.png'); /* Exibir imagem ao pressionar */
-    position: absolute;
-    top: -200px; /* Ajustar posição para mobile */
-    left: 50%;
-    transform: translateX(-50%); /* Centralizar horizontalmente */
-    z-index: 1000; /* Garantir que fique acima de tudo */
   }
 
   /* Tabela responsiva - layout em cards */
@@ -688,6 +739,7 @@ p.info-message {
     padding: 15px;
     margin-bottom: 15px;
     border-left: 4px solid #4CAF50;
+    text-align: center; /* Centralizar todo o conteúdo do card */
   }
 
   .mobile-card img {
@@ -695,35 +747,42 @@ p.info-message {
     max-width: 200px;
     height: auto;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px auto; /* Centralizar imagem */
+    display: block; /* Para funcionar o margin auto */
   }
 
   .mobile-card h3 {
     color: #4CAF50;
     margin: 0 0 10px 0;
     font-size: 1.3rem;
+    text-align: center; /* Centralizar título */
   }
 
   .mobile-card p {
     margin: 5px 0;
-    font-size: 1rem;
+    font-size: 1.6rem; /* Aumentando ainda mais o tamanho da descrição */
+    text-align: center; /* Centralizar texto */
   }
 
   .mobile-card .buy-link {
     display: block;
     text-align: center;
-    margin: 10px 0;
+    margin: 10px auto; /* Centralizar link */
     padding: 10px;
+    max-width: 250px; /* Limitar largura do link */
   }
 
   .mobile-card button {
     width: 100%;
+    max-width: 300px; /* Limitar largura do botão */
+    margin: 0 auto; /* Centralizar botão */
     padding: 15px;
     font-size: 1.4rem; /* Aumentando a fonte */
     font-family: 'Roboto', sans-serif; /* Padronizando a fonte */
     font-weight: bold; /* Deixando o texto em negrito */
     border-radius: 8px; /* Padronizando as bordas */
     transition: background-color 0.3s ease; /* Adicionando transição suave */
+    display: block; /* Para funcionar o margin auto */
   }
 
   /* Card reservado no mobile */
@@ -772,7 +831,9 @@ p.info-message {
   }
 
   .info-message.basic {
-    font-size: 1.1rem; /* Texto branco menor que os coloridos */
+    font-size: 1.8rem; /* Muito maior para chamar atenção no mobile */
+    line-height: 1.3; /* Melhor espaçamento entre linhas */
+    margin-bottom: 18px; /* Mais espaço abaixo */
   }
 
   /* Textos coloridos maiores no mobile */
@@ -788,35 +849,42 @@ p.info-message {
     font-size: 1.5rem; /* Amarelo chave PIX - o maior de todos */
   }
 
-  /* Comportamento mobile para PIX - mostrar imagem ao pressionar */
+  /* Comportamento mobile para PIX - sem hover */
   .info-message.pix:hover::after {
     display: none; /* Desabilitar hover no mobile pequeno */
-  }
-  
-  .info-message.pix:active::after {
-    content: url('bob_money-removebg-preview.png'); /* Exibir imagem ao pressionar */
-    position: absolute;
-    top: -150px; /* Posição menor para telas pequenas */
-    left: 50%;
-    transform: translateX(-50%); /* Centralizar horizontalmente */
-    z-index: 1000; /* Garantir que fique acima de tudo */
   }
 
   .mobile-card {
     padding: 12px;
+    text-align: center; /* Manter centralização no mobile pequeno */
   }
 
   .mobile-card h3 {
     font-size: 1.1rem;
+    text-align: center; /* Centralizar título */
   }
 
   .mobile-card p {
-    font-size: 0.9rem;
+    font-size: 1.4rem; /* Aumentando ainda mais o tamanho da descrição no mobile pequeno */
+    text-align: center; /* Centralizar texto */
+  }
+
+  .mobile-card img {
+    margin: 0 auto 10px auto; /* Centralizar imagem */
+    display: block; /* Para funcionar o margin auto */
+  }
+
+  .mobile-card .buy-link {
+    margin: 10px auto; /* Centralizar link */
+    max-width: 200px; /* Limitar largura do link no mobile pequeno */
   }
 
   /* Botões dos cards em mobile pequeno */
   .mobile-card button {
     padding: 12px;
     font-size: 1.2rem; /* Menor que tablet mas ainda legível */
+    max-width: 250px; /* Limitar largura do botão no mobile pequeno */
+    margin: 0 auto; /* Centralizar botão */
+    display: block; /* Para funcionar o margin auto */
   }
 }

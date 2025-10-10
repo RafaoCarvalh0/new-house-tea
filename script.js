@@ -142,3 +142,136 @@ if (window.location.pathname.includes('lista.html')) {
         }, 250);
     });
 }
+
+// Funcionalidade de toggle da imagem PIX no mobile
+document.addEventListener('DOMContentLoaded', function() {
+    // Criar a imagem do Bob Money
+    const pixImage = document.createElement('img');
+    pixImage.src = 'bob_money-removebg-preview.png';
+    pixImage.className = 'pix-image';
+    pixImage.alt = 'Bob Money PIX';
+    
+    // Adicionar a imagem ao info-container
+    const infoContainer = document.querySelector('.info-container');
+    if (infoContainer) {
+        infoContainer.appendChild(pixImage);
+    }
+    
+    // Encontrar o elemento PIX
+    const pixElement = document.querySelector('.info-message.pix');
+    let isImageVisible = false;
+    
+    if (pixElement && window.innerWidth <= 768) {
+        // Adicionar evento de clique no texto PIX para mostrar
+        pixElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Evitar que o clique se propague
+            
+            if (!isImageVisible) {
+                // Mostrar imagem
+                pixImage.style.display = 'block';
+                isImageVisible = true;
+            }
+        });
+        
+        // Adicionar evento de clique em qualquer lugar da tela para esconder
+        document.addEventListener('click', function(e) {
+            // Se a imagem está visível e o clique não foi no texto PIX
+            if (isImageVisible && !pixElement.contains(e.target)) {
+                pixImage.style.display = 'none';
+                isImageVisible = false;
+            }
+        });
+        
+        // Adicionar cursor pointer para indicar que é clicável
+        pixElement.style.cursor = 'pointer';
+    }
+    
+    // Funcionalidade de copiar chave PIX no mobile
+    const pixKeyElement = document.querySelector('.info-message.pix-key');
+    
+    if (pixKeyElement && window.innerWidth <= 768) {
+        // Criar elemento de feedback
+        const feedbackElement = document.createElement('div');
+        feedbackElement.className = 'copy-feedback';
+        feedbackElement.textContent = 'Chave PIX copiada!';
+        document.body.appendChild(feedbackElement);
+        
+        // Adicionar evento de clique na chave PIX
+        pixKeyElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Copiar para área de transferência
+            const pixKey = pixKeyElement.textContent;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                // Método moderno
+                navigator.clipboard.writeText(pixKey).then(function() {
+                    showCopyFeedback();
+                }).catch(function() {
+                    // Fallback se falhar
+                    copyToClipboardFallback(pixKey);
+                });
+            } else {
+                // Fallback para navegadores mais antigos
+                copyToClipboardFallback(pixKey);
+            }
+        });
+        
+        // Função para mostrar feedback
+        function showCopyFeedback() {
+            feedbackElement.classList.add('show');
+            setTimeout(function() {
+                feedbackElement.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Função fallback para copiar
+        function copyToClipboardFallback(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopyFeedback();
+            } catch (err) {
+                console.error('Falha ao copiar:', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // Adicionar cursor pointer para indicar que é clicável
+        pixKeyElement.style.cursor = 'pointer';
+    }
+    
+    // Atualizar comportamento quando a tela é redimensionada
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            // Desktop: esconder imagem e remover cursor
+            pixImage.style.display = 'none';
+            isImageVisible = false;
+            if (pixElement) {
+                pixElement.style.cursor = 'default';
+            }
+            if (pixKeyElement) {
+                pixKeyElement.style.cursor = 'default';
+            }
+        } else {
+            // Mobile: adicionar cursor pointer
+            if (pixElement) {
+                pixElement.style.cursor = 'pointer';
+            }
+            if (pixKeyElement) {
+                pixKeyElement.style.cursor = 'pointer';
+            }
+        }
+    });
+});
